@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FeatureExport xmlns="http://foxtel.tv/engineering/bcms/schemas/exchange/2/5"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               activate="true"
+               origin="IBMS"
+               packageId="11610641"
+               publishedDate="2016-04-05T10:24:34.0Z"
+               schemaVersion="2.5.0">
+  <Header>
+      <ExhibitionWindow end="2016-06-05T13:59:59.0Z"
+                        offerType="Subscription"
+                        price="0.00"
+                        start="2015-06-04T14:00:00.0Z"/>
+      <Terms>
+         <Term type="CA900004">
+            <Parameter name="profile"/>
+            <Parameter name="policy"/>
+            <Parameter name="download">true</Parameter>
+            <Parameter name="streaming">false</Parameter>
+            <Parameter name="rentalHours"/>
+            <Parameter name="retentionPeriod">P28D</Parameter>
+         </Term>
+         <Term type="PR1">
+            <Parameter name="product">VOD</Parameter>
+         </Term>
+      </Terms>
+      <Destinations accessTerm="CA900004" destinationID="nagra" productTerm="PR1">
+         <Destination accessTerm="CA900004"
+                      destinationID="nagra"
+                      deviceId="STBmanaged"
+                      productTerm="PR1"/>
+      </Destinations>
+  </Header>
+  <Feature>
+      <Description bugging="false"
+                   category="MOVIE"
+                   groupID=""
+                   library="true"
+                   programmeId="9178315"
+                   providerId="AO"
+                   showID=""
+                   versionCopyId="9683077"
+                   versionId="9502267">
+         <Title>Sinners Ball</Title>
+         <ShortSynopsis>Once a year, some of the hottest men and women on the planet get together for an event like no other. It's an evening of decadence and debauchery that only a select few are lucky enough to attend.</ShortSynopsis>
+         <LongSynopsis>It's The SEX PARTY Of The Year... And You're Invited
+
+
+Once a year, some of the hottest men and women on the planet get together for an event like no other. It's an evening of decadence and debauchery that only a select few are lucky enough to attend. Consider this your invitation to join jessica drake, Asa Akira, and the rest of this amazing cast for a night of sex and sin. Prepare to have your deepest,darkest fantasies fulfilled... Welcome to the annual Sinners Ball.
+
+</LongSynopsis>
+         <MarketingMessage>It's The SEX PARTY Of The Year... And You're Invited! Prepare to have your deepest, darkest fantasies fulfilled.</MarketingMessage>
+         <VideoFormat>SD</VideoFormat>
+         <NominalDuration>74 Mins</NominalDuration>
+         <Genre main="15" sub="2">Special Interest:Adult</Genre>
+         <ParentalRating>R18+</ParentalRating>
+         <Subtitled>false</Subtitled>
+         <Production>
+            <Year>2015</Year>
+            <Colour>Colour</Colour>
+            <Country>US</Country>
+            <Credits>
+               <Credit role="Actor">
+                  <Person>Asa Akira</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Jessica Drake</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Chanel Preston</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Nadia Styles</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Dixon Destiny</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Ryan Ryans</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Adrianna Luna</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Helly Mae Hellfire</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Steven St Croix</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Brad Armstrong</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Eric Masterson</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Erik Everhard</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Danny Mountain</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Derrick Pierce</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Jack Vegas</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Seth Gamble</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Ryan McLane</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Ryan Driller</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Tyler Nixon</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Jay Smooth</Person>
+               </Credit>
+               <Credit role="Director">
+                  <Person>Brad Armstrong</Person>
+               </Credit>
+            </Credits>
+         </Production>
+      </Description>
+  </Feature>
+  <Media>
+      <Videos>
+         <Video class="feature">
+            <Duration>PT4465S</Duration>
+            <AspectRatio>16x9</AspectRatio>
+            <ClosedCaptions>false</ClosedCaptions>
+            <Sound>Stereo</Sound>
+            <Files base="">
+               <File assetId="ON231080"
+                     bitrate="8000"
+                     contentType="video/mp2ts"
+                     fileSize="1064772592"
+                     filename="ON231080.ts"
+                     height="576"
+                     width="720"/>
+            </Files>
+         </Video>
+      </Videos>
+      <Images>
+         <ImageSource base="">
+            <Image class="poster"
+                   contentType="image/jpeg"
+                   fileSize="138265"
+                   filename="I@056414.jpg"
+                   imageId="I@056414"/>
+            <Image class="landscape"
+                   contentType="image/jpeg"
+                   fileSize="144832"
+                   filename="I@056414_L.jpg"
+                   imageId="I@056414_L"/>
+         </ImageSource>
+      </Images>
+  </Media>
+</FeatureExport>

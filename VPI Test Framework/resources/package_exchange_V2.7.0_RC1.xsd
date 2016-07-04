@@ -1,0 +1,2767 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by SOFTWARE LICENSING (INSIGHT ENTERPRISES AUSTRALIA) -->
+<!--
+== BCMS Metadata Exchange Schema
+== Create by: Matthew Bennetts (matthew.bennetts@foxtel.com.au)
+== $Rev: 16 $ 
+== $Date: 2013-08-29 17:20:14 +1000 (Thu, 29 Aug 2013) $ by $Author: bennettm $
+== $Id: package_exchange_2_4_3.xsd 16 2013-08-29 07:20:14Z bennettm $
+
+AEH 2011-03-17 - Added Destination enumeration telstar_wholesale for the T-Box platform.
+SRF 2012-06-18 - Added Changes for Project GO: VideoExport, priorityType, "Switch Media" destinations & access controls enumerations
+SRF 2012-07-17 -  Added poster and landscape images clases & corrected typo in AssetExport
+SRF 2012-0731 - Add INGESTING & PUBLISHING status messages
+ACM 2012-07-31 - Added destination "switch_pc_mac"
+SRF 2013-03-26  2.3    Added Segment Midroll elements, allow multiple Access Control sections
+GTo  2013-03-15  2.3.0 Added TermListType (as Terms to Header), TermDetailType, ExternalRefListType and ExternalRefType
+GTo  2013-03-28  2.3.1,2 Added @deviceId=(DeviceType) and @accessTerm to Destination.  Added @expiry to ExhibitionWindow.
+GTo  2013-03-28  2.3.2 Removed DestinationType enumeration value="oo_fox8"
+GTo  2013-04-02  2.3.3 Added DestinationListType@accessTerm, added DestinationListType@productTerm, added svod to DestinationType and removed switch_pc from it. Adjusted DeviceType List to latest. Added timeToStartView, rentalPeriod and product to ContentProtectionParamNameType (Parameter Names). Added Detination Type switch_CEMediaPlayer, switch_gameConsole and also switch_STB (to avoid delays DO NOT USE if possible).
+GTo  2013-04-04 2.4 file renamed to 2.4
+GTo  2013-04-05 2.4 Added attribute DestinationID to DestinationListType.
+GTo  2013-05-13 2.4.2 Added PC Mac play destinationID and device of pc_mac_play (temp until use established). 
+AKu  2013-08-16 2.4.3 Added ShowID to Feature\Description attribute and enumeration Retention Period
+MJB 2013-08-16 2.4.3 Added PPV-Push, PPV-TV, PPV-TV-Kids to OfferType enumeration
+MJB 2013-08-16 2.4.3 Added Redbee to OriginatingSystemIdentifierType enumeration
+MJB 2013-08-16 2.4.3 Added REPG to PlatformType enumeration.
+MJB 2013-08-29 2.4.3 Added VideoFormatType enumeration with values of SD, HD, or 3D to capture video format
+MJB 2013-08-29 2.4.3 Added optional "VideoFormat" element on EPGDescriptionType to indicate video format
+MJB 2013-08-29 2.4.3 Added optional "Widescreen" boolean element to EPGDescriptionType to communicate true widescreen content
+MJB 2014-01-17 2.5.0 Many changes, mostly genre related. Please refer to the iQ3 project change request form: CR-125 for more detail.
+-->
+<xsd:schema xmlns="http://foxtel.tv/engineering/bcms/schemas/exchange/2/7" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://foxtel.tv/engineering/bcms/schemas/exchange/2/7" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- ================================================== -->
+	<!-- =====  Element Declarations  -->
+	<!-- ================================================== -->
+	<xsd:element name="FeatureExport" type="FeatureExportType">
+		<xsd:annotation>
+			<xsd:documentation>Export a customer ready offer package to a receiving system</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FeatureExportResponse" type="FeatureExportResponseType">
+		<xsd:annotation>
+			<xsd:documentation>Response message to a feature export from receiving system</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FeatureImport" type="FeatureImportType">
+		<xsd:annotation>
+			<xsd:documentation>Import feature metadata and broadcast media information from an upstream system</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AssetExport" type="AssetExportType">
+		<xsd:annotation>
+			<xsd:documentation> Publish stand alone video assets to a recieving system</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AssetLicenseExport" type="AssetLicenseExportType">
+		<xsd:annotation>
+			<xsd:documentation>Notify the receiving system of a change to the video asset license window</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MediaPurgeRequest" type="FeatureMediaPurgeType">
+		<xsd:annotation>
+			<xsd:documentation>Purge a video asset from a receiving system</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MediaPurgeResponse" type="FeatureExportResponseType">
+		<xsd:annotation>
+			<xsd:documentation>Response message from receiving system to a video purge</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ImagePurgeRequest" type="FeatureImagePurgeType">
+		<xsd:annotation>
+			<xsd:documentation>Purge an image asset from the receiving system</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ImagePurgeResponse" type="FeatureExportResponseType">
+		<xsd:annotation>
+			<xsd:documentation>Response message from receiving system to an image purge</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- ================================================== -->
+	<!-- =====  Model Group Definitions  -->
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+	<!-- =====  Simple Type Definitions  -->
+	<!-- ================================================== -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  AspectRatioType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="AspectRatioType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for video aspect ratio. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.32</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="4x3"/>
+			<xsd:enumeration value="16x9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  AtmosphereListType  <<list>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="AtmosphereListType">
+		<xsd:annotation>
+			<xsd:documentation>Allows for a list of one or more atmosphere values</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="AtmosphereType"/>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  AtmosphereType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="AtmosphereType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for atmosphere. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.53</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Alternative"/>
+			<xsd:enumeration value="Analytical"/>
+			<xsd:enumeration value="Astonishing"/>
+			<xsd:enumeration value="Ambitious"/>
+			<xsd:enumeration value="Black"/>
+			<xsd:enumeration value="Breathtaking"/>
+			<xsd:enumeration value="Chilling"/>
+			<xsd:enumeration value="Coarse"/>
+			<xsd:enumeration value="Compelling"/>
+			<xsd:enumeration value="Confrontational"/>
+			<xsd:enumeration value="Contemporary"/>
+			<xsd:enumeration value="Crazy"/>
+			<xsd:enumeration value="Cutting-edge"/>
+			<xsd:enumeration value="Eclectic"/>
+			<xsd:enumeration value="Edifying"/>
+			<xsd:enumeration value="Exciting"/>
+			<xsd:enumeration value="Fast-moving"/>
+			<xsd:enumeration value="Frantic"/>
+			<xsd:enumeration value="Fun"/>
+			<xsd:enumeration value="Gripping"/>
+			<xsd:enumeration value="Gritty"/>
+			<xsd:enumeration value="Gutsy"/>
+			<xsd:enumeration value="Happy"/>
+			<xsd:enumeration value="Heart-rending"/>
+			<xsd:enumeration value="Heart-warming"/>
+			<xsd:enumeration value="Hot"/>
+			<xsd:enumeration value="Humorous"/>
+			<xsd:enumeration value="Innovative"/>
+			<xsd:enumeration value="Insightful"/>
+			<xsd:enumeration value="Inspirational"/>
+			<xsd:enumeration value="Irreverent"/>
+			<xsd:enumeration value="Laid-back"/>
+			<xsd:enumeration value="Outrageous"/>
+			<xsd:enumeration value="Peaceful"/>
+			<xsd:enumeration value="Powerful"/>
+			<xsd:enumeration value="Practical"/>
+			<xsd:enumeration value="Rollercoaster"/>
+			<xsd:enumeration value="Romantic"/>
+			<xsd:enumeration value="Rousing"/>
+			<xsd:enumeration value="Sad"/>
+			<xsd:enumeration value="Satirical"/>
+			<xsd:enumeration value="Serious"/>
+			<xsd:enumeration value="Sexy"/>
+			<xsd:enumeration value="Shocking"/>
+			<xsd:enumeration value="Silly"/>
+			<xsd:enumeration value="Spooky"/>
+			<xsd:enumeration value="Stunning"/>
+			<xsd:enumeration value="Stylish"/>
+			<xsd:enumeration value="Terrifying"/>
+			<xsd:enumeration value="Thriller"/>
+			<xsd:enumeration value="Violent"/>
+			<xsd:enumeration value="Wacky"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  AvailableAudioType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="AvailableAudioType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for values for audio type. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Mono"/>
+			<xsd:enumeration value="Stereo"/>
+			<xsd:enumeration value="Surround"/>
+			<xsd:enumeration value="Digital"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ColourType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ColourType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for colour type. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BlackAndWhite"/>
+			<xsd:enumeration value="Colourised"/>
+			<xsd:enumeration value="Colour"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ConsumerWarningListType  <<list>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ConsumerWarningListType">
+		<xsd:annotation>
+			<xsd:documentation>Consumer warnings</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="ConsumerWarningType"/>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ConsumerWarningType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ConsumerWarningType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values consumer warnings. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="a"/>
+			<xsd:enumeration value="d"/>
+			<xsd:enumeration value="h"/>
+			<xsd:enumeration value="l"/>
+			<xsd:enumeration value="m"/>
+			<xsd:enumeration value="n"/>
+			<xsd:enumeration value="s"/>
+			<xsd:enumeration value="v"/>
+			<xsd:enumeration value="w"/>
+			<xsd:enumeration value="t"/>
+			<xsd:enumeration value="st"/>
+			<xsd:enumeration value="ab"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ContentProtectionParamNameType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ContentProtectionParamNameType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for the parameter names</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="contentId"/>
+			<xsd:enumeration value="profile"/>
+			<xsd:enumeration value="policy"/>
+			<xsd:enumeration value="policyGroup"/>
+			<xsd:enumeration value="rentalHours"/>
+			<xsd:enumeration value="rentalPeriod"/>
+			<xsd:enumeration value="retentionPeriod"/>
+			<xsd:enumeration value="download"/>
+			<xsd:enumeration value="streaming"/>
+			<xsd:enumeration value="timeToStartView"/>
+			<xsd:enumeration value="product"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ContentTypeType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ContentTypeType">
+		<xsd:annotation>
+			<xsd:documentation>MIME content type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  DestinationType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="DestinationType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="corp_website"/>
+			<xsd:enumeration value="corp_onlineguide"/>
+			<xsd:enumeration value="corp_digitalstore"/>
+			<xsd:enumeration value="ioko_platform"/>
+			<xsd:enumeration value="nagra"/>
+			<xsd:enumeration value="telstra_wholesale"/>
+			<xsd:enumeration value="stu_download"/>
+			<xsd:enumeration value="svod"/>
+			<xsd:enumeration value="switch"/>
+			<xsd:enumeration value="switch_STB"/>
+			<xsd:enumeration value="switch_CEMediaPlayer"/>
+			<xsd:enumeration value="switch_gameConsole"/>
+			<xsd:enumeration value="switch_tablet"/>
+			<xsd:enumeration value="switch_phone"/>
+			<xsd:enumeration value="switch_pc_mac"/>
+			<xsd:enumeration value="switch_pc_mac_play"/>
+			<xsd:enumeration value="switch_connTV"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  DeviceType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="DeviceType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="STBmanaged"/>
+			<xsd:enumeration value="STBunmanaged"/>
+			<xsd:enumeration value="CEMediaPlayer"/>
+			<xsd:enumeration value="gameConsole"/>
+			<xsd:enumeration value="tablet"/>
+			<xsd:enumeration value="phone"/>
+			<xsd:enumeration value="pc_mac"/>
+			<xsd:enumeration value="pc_mac_play"/>
+			<xsd:enumeration value="connTV"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureCategoryType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="FeatureCategoryType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MOVIE"/>
+			<xsd:enumeration value="TV_EPS">
+				<xsd:annotation>
+					<xsd:documentation>Episodic TV content</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="TV_NO_EPS">
+				<xsd:annotation>
+					<xsd:documentation>Non-episodic TV content</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="EVENT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  SegmentCategoryType-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="SegmentCategoryType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies points in the media </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Spot"/>
+			<xsd:enumeration value="Programme"/>
+			<xsd:enumeration value="Credits"/>
+			<xsd:enumeration value="Classification"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  GenreType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="GenreType">
+		<xsd:simpleContent>
+			<xsd:extension base="GenreValuesType">
+				<xsd:attribute name="main" type="xsd:nonNegativeInteger" use="required"/>
+				<xsd:attribute name="sub" type="xsd:nonNegativeInteger" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  GenreValuesType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="GenreValuesType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for genre. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Entertainment:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Action/Thriller">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Adventure">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Comedy">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Mystery/Horror">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Drama">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Educational">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Light Ent">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Lifestyle/Doco">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Reality">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Arts">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 10</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Sci Fi/Fantasy">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 11</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:War/Western">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 12</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Talk Shows">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 13</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Entertainment:Special Events">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 02, sub-genre = 14</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Action/Adventure">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Animation">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Documentaries">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Drama">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Erotic">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Sci-Fi/Fantasy">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Foreign">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Horror">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Musical/Dance">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Thriller/Suspense">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 10</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Romance">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 11</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:War/Western/History">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 12</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Mystery/Crime">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 13</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Comedy">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 14</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Movie:Kids/Family">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 04, sub-genre = 15</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:AFL">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:TrackandPool">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Court Sports">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:BoxandWrest">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Cricket">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Baseball">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Extreme">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Winter">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Golf">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Racing">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 10</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:NewsandOther">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 11</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Rugby League">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 12</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Rugby Union">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 13</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Soccer">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 14</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Sport:Special">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 06, sub-genre = 15</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Business/Finance">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:International">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Local">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Magazine/Discussion/Interview">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Public Affairs/Political">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Weather/Information">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Sports">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Biography">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:PeopleandCulture">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:History">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 10</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:Science/Technology">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 11</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries: Natural World">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 12</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="News and Documentaries:TravelandAdventure">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 08, sub-genre = 13</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Adventure/Action">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Animation/Cartoon">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Comedy">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Drama">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Educational">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Fantasy">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Game Show">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Movies">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Musical">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Pre-School">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 10</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Sport">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 11</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Science">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 12</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Technology">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 13</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Kids and Family:Reality">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 10, sub-genre = 14</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Favourites">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Classical/Opera">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Country">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Dance/Techno">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Reality/Fact">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Jazz/Blues">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Pop">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Live/Request">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:RapandHip Hop">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Rock">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 10</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Soul/RandB">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 11</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Radio">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 12</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Music and Radio:Specials">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 12, sub-genre = 13</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Special Interest:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 14, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Special Interest:Religion">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 14, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Special Interest:Foreign Language Channels">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 14, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Special Interest:Adult">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 14, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Special Interest:Shopping">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 14, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Special Interest:Help">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 14, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:News and Doco">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Sports">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Kids and Family">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Entertainment">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Music and Radio">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Arts and Leisure">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Movies">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Specialist">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Services">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Shopping">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 10</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Help/Cust Care">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 11</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Wagering">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 12</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Messaging">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 13</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Games">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 14</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Active:Voting/Surveys">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 07, sub-genre = 15</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Arcade">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Puzzle">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Quiz">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 03</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Multiplayer">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 04</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Play-along">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 05</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Sports">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 06</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Racing">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 07</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Kids">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 08</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Games:Adult">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 05, sub-genre = 09</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Adult:Undefined">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 15, sub-genre = 00</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Adult:Erotica">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 15, sub-genre = 01</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Adult:OnDemand">
+				<xsd:annotation>
+					<xsd:documentation>EPG main-genre = 15, sub-genre = 02</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ImageClassificationType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ImageClassificationType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for categorising images [Ref: ...]</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="primaryImage"/>
+			<xsd:enumeration value="thumbnailImage"/>
+			<xsd:enumeration value="optionalOther"/>
+			<xsd:enumeration value="frameGrab"/>
+			<xsd:enumeration value="userStill"/>
+			<xsd:enumeration value="poster"/>
+			<xsd:enumeration value="landscape"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ImageMediaFormatType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ImageMediaFormatType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for image file formats [Ref: ...]</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="JPG"/>
+			<xsd:enumeration value="GIF"/>
+			<xsd:enumeration value="PNG"/>
+			<xsd:enumeration value="TGA"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  LanguageListType  <<list>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="LanguageListType">
+		<xsd:annotation>
+			<xsd:documentation>Allows a list of language codes</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="xsd:language"/>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  OfferType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="OfferType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PPV"/>
+			<xsd:enumeration value="Subscription"/>
+			<xsd:enumeration value="PPV-New"/>
+			<xsd:enumeration value="PPV-Recent"/>
+			<xsd:enumeration value="PPV-Library"/>
+			<xsd:enumeration value="PPV-Special"/>
+			<xsd:enumeration value="PPV-TV"/>
+			<xsd:enumeration value="PPV-TV-Kids"/>
+			<xsd:enumeration value="PPV-HD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  OriginatingSystemIdentifierType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="OriginatingSystemIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>List of source ids used to identify the source of a package</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Paradigm"/>
+			<xsd:enumeration value="IBMS"/>
+			<xsd:enumeration value="Dayport"/>
+			<xsd:enumeration value="HWW"/>
+			<xsd:enumeration value="Redbee">
+				<xsd:annotation>
+					<xsd:documentation>Redbee Media - Reverse EPG, dirty VOP, and clean VOD content</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ParentalRatingType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="ParentalRatingType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for parental rating. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="G"/>
+			<xsd:enumeration value="PG"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="MA15+"/>
+			<xsd:enumeration value="R18+"/>
+			<xsd:enumeration value="NC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- PlatformType-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="PlatformType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PC"/>
+			<xsd:enumeration value="XBOX"/>
+			<xsd:enumeration value="IPJ"/>
+			<xsd:enumeration value="HD_VOD"/>
+			<xsd:enumeration value="SD_VOD"/>
+			<xsd:enumeration value="REPG">
+				<xsd:annotation>
+					<xsd:documentation>Reverse EPG</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  RegionCodeType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="RegionCodeType">
+		<xsd:annotation>
+			<xsd:documentation>ISO 3166-2:2007 - Country and region </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:whiteSpace value="collapse"/>
+			<xsd:pattern value="[a-zA-Z]{2}(-[a-zA-Z0-9]{1,3})?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  RoleType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="RoleType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for the role a person performed in a feature. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Actor"/>
+			<xsd:enumeration value="Producer"/>
+			<xsd:enumeration value="Director"/>
+			<xsd:enumeration value="Writer"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TapeClassificationType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="TapeClassificationType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="feature"/>
+			<xsd:enumeration value="promo"/>
+			<xsd:enumeration value="trailer"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TargetDeviceType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="TargetDeviceType">
+		<xsd:annotation>
+			<xsd:documentation>A list of acceptable values for playback devices. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.38</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DownloadManager"/>
+			<xsd:enumeration value="EmbeddedPlayer"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TermDetailType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="TermDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Encapsulates any parameters used for content protection (e.g. Entriq's CPS)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Parameter" type="ContentProtectionParamType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A content protection parameter.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TermTypeList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="TermListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of right Terms</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Term" type="TermDetailType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A rights term defining access rights for DRM, rights to media and rights related comments, </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TimeCodeType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="TimeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Timecode hh:mm:ss.ff - where ff is frames and frames are optional</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d\d:\d\d:\d\d(\.\d\d)*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoClassificationType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="VideoClassificationType">
+		<xsd:annotation>
+			<xsd:documentation>List of acceptable values for categorising a video asset [Ref: ...]</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="feature"/>
+			<xsd:enumeration value="promo"/>
+			<xsd:enumeration value="trailer"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  YearDateType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="YearDateType">
+		<xsd:annotation>
+			<xsd:documentation>A datatype to represent a specific year. The lexical representation is YYYY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d\d\d\d"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  PromoCategoryType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="PromoCategoryType">
+		<xsd:annotation>
+			<xsd:documentation>Promo category enumeration type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Episodic-A"/>
+			<xsd:enumeration value="Episodic-B"/>
+			<xsd:enumeration value="SeasonGeneric"/>
+			<xsd:enumeration value="ShowGeneric"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Prioity  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="priorityType" id="positiveInteger">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ================================================== -->
+	<!-- =====  Complex Type Definitions  -->
+	<!-- ================================================== -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  AwardList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="AwardListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of awards</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Award" type="AwardType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Details of an award. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.38</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Award  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="AwardType">
+		<xsd:annotation>
+			<xsd:documentation>Contains information about an award that was given. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.54</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Year" type="xsd:gYear">
+				<xsd:annotation>
+					<xsd:documentation>The year the award was given in. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.54</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Category" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The category in which the award was given. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.54</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Result" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The result (e.g. nominee). See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.54</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Recipient" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The recipient of the award. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.54</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>The name of the award. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.54</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  BinaryMediaItem  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="BinaryMediaItemType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>A binary media item</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MediaItemType">
+				<xsd:attribute name="filename" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Media name</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="contentType" type="ContentTypeType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>MIME content type</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="fileSize" type="xsd:nonNegativeInteger" use="required">
+					<xsd:annotation>
+						<xsd:documentation>The size of the file in bytes</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="signature" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>A file signature, such as an MD5 hash. Intended to be used by the receiving end to detect changes in the binary file</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  HostedMediaItem  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="HostedMediaItemType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>A media item that is accessed via another origin location</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MediaItemType">
+				<xsd:attribute name="uri" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Media name</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="contentType" type="ContentTypeType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>MIME content type</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="nominalSize" type="xsd:nonNegativeInteger" use="required">
+					<xsd:annotation>
+						<xsd:documentation>The nomial size of the asset in bytes for display to the customer. For streaming this is the largest rendition size.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ContentDescription  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ContentDescriptionType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Encapsulates descriptive information about the package</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="EPGDescriptionType">
+				<xsd:sequence>
+					<xsd:element name="NominalDuration" type="xsd:string" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>The nominal duration of the feature. For eample: 120 Mins, or 2 hrs</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="providerId" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Provide downstream systems with the means to identify the content owner or provider. For example; a channel is a provider. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.4</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ContentProtectionParam  <<complexType>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ContentProtectionParamType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a content protection parameter</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="name" use="required">
+					<xsd:annotation>
+						<xsd:documentation>The parameter name</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="ContentProtectionParamNameType"/>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ContentProtection  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ContentProtectionType">
+		<xsd:annotation>
+			<xsd:documentation>Encapsulates any parameters used for content protection (e.g. Entriq's CPS)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Parameter" type="ContentProtectionParamType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A content protection parameter.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Content  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ContentType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Defines a package content type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  CountryOfProduction  <<complexType>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="CountryOfProductionType">
+		<xsd:annotation>
+			<xsd:documentation>The country of production, when production began, and when production finished</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="RegionCodeType">
+				<xsd:attribute name="from" type="xsd:date">
+					<xsd:annotation>
+						<xsd:documentation>The date when production began in the specified country</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="to" type="xsd:date">
+					<xsd:annotation>
+						<xsd:documentation>The date when production finished in the specified country.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  CreditList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="CreditListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of credits</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Credit" type="FeatureCreditType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>One or more credits. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  DateTimeWindow  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="DateTimeWindowType">
+		<xsd:annotation>
+			<xsd:documentation>Used to specify a window of time</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="start" type="xsd:dateTime" use="required">
+			<xsd:annotation>
+				<xsd:documentation>The exact starting date and time.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="end" type="xsd:dateTime" use="required">
+			<xsd:annotation>
+				<xsd:documentation>The exact ending date and time.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="expiry" type="xsd:dateTime" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>The date and time the content must no longer be present on all Destinations.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="offerType" type="OfferType" use="optional" default="Subscription">
+			<xsd:annotation>
+				<xsd:documentation>Indicates if this offer is PPV or Subscription</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="price" default="0.00">
+			<xsd:annotation>
+				<xsd:documentation>Price in 0.00 format required when the offerType is PPV</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="(\d+\.\d\d)"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  DestinationDetail  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="DestinationDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Used to define destination and optional destination parameters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Key" type="KeyValueType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A list of keys and values that could be used to convey destination specific parameters or metadata.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="destinationID" type="DestinationType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the id used to determine the intended destination for a package.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="deviceId" type="DeviceType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the id used to determine the intended device.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="accessTerm" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the Term id used for Access Control.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="productTerm" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the Term id used to list the Product Propositions.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  DestinationList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="DestinationListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of destination</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Destination" type="DestinationDetailType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A destination for which the content description and associated media is to be distrbuted. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.6</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="destinationID" type="DestinationType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the default id used to determine the intended destination for a package.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="accessTerm" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the default Term id for Access Control. Will typically also be used where the Platform does not support individual device control</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="productTerm" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the default Term id that lists the Product Propositions. Will typically also be used where the Platform does not support individual Product Propositions.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- DisplayMessageType-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="DisplayMessageType">
+		<xsd:annotation>
+			<xsd:documentation>Used to pass display message</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="xsd:anyType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- EPGLanguageListType-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="EPGLanguageType">
+		<xsd:complexContent>
+			<xsd:extension base="EPGDescriptionType">
+				<xsd:attribute name="name" type="xsd:language" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- EPGPlatformListType-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="EPGPlatformType">
+		<xsd:complexContent>
+			<xsd:extension base="EPGDescriptionType">
+				<xsd:attribute name="name" type="PlatformType" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- EPGLanguageListType-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="EPGDescriptionListType">
+		<xsd:annotation>
+			<xsd:documentation>Defines an EPG description for a language</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="Language" type="EPGLanguageType"/>
+			<xsd:element name="Platform" type="EPGPlatformType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  EPGDescriptionType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="EPGDescriptionType">
+		<xsd:annotation>
+			<xsd:documentation>Defines an EPG description type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Title" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>A title. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.9</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SortTitle" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Title that provides A-Z sorting hints i.e. Simpsons, The</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EventTitle" type="xsd:string" nillable="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The title used for all display points. It allows for deviations from program title such as mapping, or channel preferred presentation style.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ShortSynopsis" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>A short synopsis. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.25</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LongSynopsis" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>A longer synopsis.See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.24</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MarketingMessage" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>A marketing message. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.26</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VideoFormat" type="VideoFormatType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Used to communicate the video format (e.g. SD, HD, 3D)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Widescreen" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Used to identify if content is true widescreen or not</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DisplaySeriesEpNum" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="DisplayMessages" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DisplayMessage" type="DisplayMessageType" maxOccurs="99"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ExternalRefList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ExternalRefListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of External Web and other sites.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ExternalRef" type="ExternalRefType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ExternalRef  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ExternalRefType">
+		<xsd:sequence>
+			<xsd:element name="TitleId" type="xsd:string"/>
+			<xsd:element name="SeriesId" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="site" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>The site Key. May be the site address or a code. The downstram system converts this referece into a URL by way of a lookup from its own tables so that the address my change but the reference stays the same. </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureContentExport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureContentExportType">
+		<xsd:sequence>
+			<xsd:element name="Description" type="FeatureDescriptionType"/>
+			<xsd:element name="ContentIdentification" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ContentIdentifier" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:simpleContent>
+									<xsd:extension base="xsd:string">
+										<xsd:attribute name="context" use="required">
+											<xsd:annotation>
+												<xsd:documentation>Specifies the context; e.g. Asset, Season, Show, Group or implied by the format attribute</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:enumeration value="ASSET"/>
+													<xsd:enumeration value="SEASON"/>
+													<xsd:enumeration value="SHOW"/>
+													<xsd:enumeration value="GROUP"/>
+													<xsd:enumeration value="OFFER"/>
+													<xsd:enumeration value="EVENT"/>
+													<xsd:enumeration value="PROGRAMME"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:attribute>
+										<xsd:attribute name="provider" type="xsd:string" use="required">
+											<xsd:annotation>
+												<xsd:documentation>The id format; e.g. IMDB, TMS, EIDR, UMID, ISAN, ...</xsd:documentation>
+											</xsd:annotation>
+										</xsd:attribute>
+									</xsd:extension>
+								</xsd:simpleContent>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Tags" type="TagListType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureContentImport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureContentImportType">
+		<xsd:sequence>
+			<xsd:element name="Protection" type="ContentProtectionType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Parameters for content protect, i.e. DRM</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="FeatureImportDescriptionType">
+				<xsd:annotation>
+					<xsd:documentation>Contains detail about the feature.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Tags" type="TagListType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>A container for additional metadata items. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.57</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureCredit  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureCreditType">
+		<xsd:annotation>
+			<xsd:documentation>Used to credit people for their role in a production. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Person" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The name of the person that performed a role in the feature. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Character" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>The name of the character. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="role" type="RoleType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>The role a person performed in a feature. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  SimilarTitleListType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="SimilarTitleListType">
+		<xsd:annotation>
+			<xsd:documentation>Specifies a list of similar titles (groupIds)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GroupId" type="xsd:string" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MappedTitleType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MappedTitleType">
+		<xsd:annotation>
+			<xsd:documentation>Specifies a mapped title title</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="type" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>The mapped title type e.g. EPG or IPJ versions</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MappedTitleListType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MappedTitleListType">
+		<xsd:annotation>
+			<xsd:documentation>Specifies a list of mapped titles</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Title" type="MappedTitleType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureImportDescription  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureImportDescriptionType">
+		<xsd:annotation>
+			<xsd:documentation>Encapsulates descriptive information about a feature import</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="FeatureDescriptionType">
+				<xsd:sequence>
+					<xsd:element name="SeriesDescription" type="xsd:string" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Series or group description for boxed sets and season purchases</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="MappedTitles" type="MappedTitleListType" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>A title field supplied in addition to the official me title that is the EPG title</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="SimilarTitles" type="SimilarTitleListType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureDescription  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureDescriptionType">
+		<xsd:annotation>
+			<xsd:documentation>Encapsulates descriptive information about a feature</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ContentDescriptionType">
+				<xsd:sequence>
+					<xsd:element name="Genre" type="GenreType">
+						<xsd:annotation>
+							<xsd:documentation>Specifies the genre. See document FD-T-E-2590 Issue 1, Rev 2 section  3.1.1.15</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ParentalRating" type="ParentalRatingType">
+						<xsd:annotation>
+							<xsd:documentation>The parental rating. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.16</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ConsumerWarnings" type="ConsumerWarningListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Consumer warnings. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.17</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Subtitled" type="xsd:boolean" default="false" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Indicates if video subtitles are present. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Production" type="FeatureProductionType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Contains additional detail about the production. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Atmosphere" type="AtmosphereListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Used to describe the Atmosphere. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Reviews" type="ReviewListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>A list of reviews. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.29</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Awards" type="AwardListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>A list of awards given. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.54</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Ratings" type="RatingListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>A list of ratings.a score out of n</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="SeasonNumber" type="xsd:positiveInteger" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>FD-T-E-2590 2.1.1.11</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="EpisodeNumber" type="xsd:string" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>FD-T-E-2590 2.1.1.13</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="EpisodeTitle" type="xsd:string" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>FD-T-E-2590 2.1.1.14</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ExternalRef" type="ExternalRefListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>A list of external Web and other sites</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="showID" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Used to group multiple season's episodic titles together. ie The Simpsons</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="category" type="FeatureCategoryType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>The category that this package belongs to. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.7</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="groupID" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Title group. Used to group titles. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.9a</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="library" type="xsd:boolean" default="false">
+					<xsd:annotation>
+						<xsd:documentation>Identifies content as being part of a long term library of material. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.7a</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="programmeId" use="required">
+					<xsd:annotation>
+						<xsd:documentation>To be used by downstream EPG. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.10</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:pattern value="\w+"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="versionId" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Used to identify different cuts of the same feature</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="versionCopyId" type="xsd:string"/>
+				<xsd:attribute name="bugging" type="xsd:boolean" default="false">
+					<xsd:annotation>
+						<xsd:documentation>True if the feature is to be bugged during transcoding. The default is false, i.e. no bug</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureExport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureExportType">
+		<xsd:complexContent>
+			<xsd:extension base="PackageExportType">
+				<xsd:sequence>
+					<xsd:element name="Header" type="PackageHeaderType"/>
+					<xsd:element name="Feature" type="FeatureContentExportType"/>
+					<xsd:element name="Media" type="MediaExportType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MediaExport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="AssetExportType">
+		<xsd:complexContent>
+			<xsd:extension base="MessageType">
+				<xsd:sequence>
+					<xsd:element name="Header" type="PackageHeaderType"/>
+					<xsd:element name="Videos" type="VideoListType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MediaLicenseExportType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="AssetLicenseExportType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a license change for an asset export to receiving systems</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MessageType">
+				<xsd:sequence>
+					<xsd:element name="AssetId" type="xsd:string" nillable="false"/>
+					<xsd:element name="LicenseWindow" type="DateTimeWindowType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureMediaPurgeType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureMediaPurgeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a media purge message to receiving systems</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MessageType">
+				<xsd:sequence>
+					<xsd:element name="AssetId" type="xsd:string" nillable="false"/>
+					<xsd:element name="RequestId" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureImagePurgeType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureImagePurgeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a media purge message to receiving systems</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MessageType">
+				<xsd:sequence>
+					<xsd:element name="ImageId" type="xsd:string" nillable="false"/>
+					<xsd:element name="RequestId" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureMediaPurgeType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureExportResponseType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a response message from the receiving system</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MessageType">
+				<xsd:sequence>
+					<xsd:element name="RequestId" type="xsd:string" minOccurs="0"/>
+					<xsd:choice>
+						<xsd:element name="PackageId"/>
+						<xsd:element name="AssetId" type="xsd:string" nillable="false"/>
+						<xsd:element name="ImageId" type="xsd:string" nillable="false"/>
+					</xsd:choice>
+					<xsd:element name="Status">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="SUCCESS"/>
+								<xsd:enumeration value="INGESTING"/>
+								<xsd:enumeration value="PUBLISHING"/>
+								<xsd:enumeration value="FAIL"/>
+								<xsd:enumeration value="HALTED"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Message" type="xsd:string" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureImport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureImportType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a feature specific package</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PackageImportType">
+				<xsd:sequence>
+					<xsd:element name="Header" type="PackageHeaderType">
+						<xsd:annotation>
+							<xsd:documentation>A Container for package header information.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Feature" type="FeatureContentImportType">
+						<xsd:annotation>
+							<xsd:documentation>A container for the package content description.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Media" type="MediaImportType">
+						<xsd:annotation>
+							<xsd:documentation>A container for the package media detail.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureProduction  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureProductionType">
+		<xsd:annotation>
+			<xsd:documentation>Defines feature specific production information</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Year" type="YearDateType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The year of production and/or release. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.28</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Colour" type="ColourType" default="Colour" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The type of colour. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.34</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Languages" type="LanguageListType" default="en" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>A list of spoken languages. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.27</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Country" type="CountryOfProductionType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A list of countries where production took place. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1.23</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Credits" type="CreditListType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>A list of credits. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FeatureReview  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="FeatureReviewType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a feature review element type. See document FD-T-E-2590 Issue 1, Rev 2 section 3.1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Reviewer" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The name of the person who did the review.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Source" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The source from which the review was obtained.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Text" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The text</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="date" type="xsd:date">
+			<xsd:annotation>
+				<xsd:documentation>The date of the review</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ImageFile  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ImageFileType">
+		<xsd:complexContent>
+			<xsd:extension base="BinaryMediaItemType">
+				<xsd:attribute name="class" type="ImageClassificationType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Classification of the image, e.g. it's a thumbnail.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="width" type="xsd:positiveInteger">
+					<xsd:annotation>
+						<xsd:documentation>The width of the image</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="height" type="xsd:positiveInteger">
+					<xsd:annotation>
+						<xsd:documentation>The height of the image</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="imageId" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Unique id of the image that is consistant across multiple offers for the same media asset.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ImageList  <<complexType, choice>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ImageListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of images</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="ImageSource" type="ImageSourceType">
+				<xsd:annotation>
+					<xsd:documentation>A image source</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ImageContent" type="ImageMediaContentType">
+				<xsd:annotation>
+					<xsd:documentation>A base64 encoded image</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ImageMediaContent  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ImageMediaContentType">
+		<xsd:complexContent>
+			<xsd:extension base="ImageFileType">
+				<xsd:sequence>
+					<xsd:element name="Contents" type="xsd:base64Binary">
+						<xsd:annotation>
+							<xsd:documentation>The base64 encoded binary image data</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ImageSource  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ImageSourceType">
+		<xsd:sequence>
+			<xsd:element name="Image" type="ImageFileType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>One or more images</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="base" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Base URL for the imasge media</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  KeyValue  <<complexType>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="KeyValueType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a key/value pair</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="name" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>The key name or id.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MediaExport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MediaExportType">
+		<xsd:complexContent>
+			<xsd:extension base="MediaType">
+				<xsd:sequence>
+					<xsd:element name="Videos" type="VideoListType"/>
+					<xsd:element name="Images" type="ImageListType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MediaImport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MediaImportType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the packages' source media</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MediaType">
+				<xsd:sequence>
+					<xsd:element name="Images" type="ImageListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Details of supplied images</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:choice>
+						<xsd:element name="Tapes" type="TapeListType">
+							<xsd:annotation>
+								<xsd:documentation>Video media from one or more video tapes</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Videos" type="VideoImportListType"/>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MediaItemSource  <<complexType>>  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MediaItemSourceType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:anyURI">
+				<xsd:attribute name="contentType" type="ContentTypeType" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  MediaItem  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MediaItemType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>An abstract media item type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Media  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MediaType"/>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  PackageExport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="PackageExportType">
+		<xsd:complexContent>
+			<xsd:extension base="PackageType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  PackageHeader  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="PackageHeaderType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a package header type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ExhibitionWindow" type="DateTimeWindowType">
+				<xsd:annotation>
+					<xsd:documentation>The period for which the export is available to the customer. For a FeatureExport this is the offer duration and for AssetExport it represents the asset availability period before purge. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.5</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Terms" type="TermListType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>The rights terms associated with a programme.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Destinations" type="DestinationListType">
+				<xsd:annotation>
+					<xsd:documentation>Contains a list of destinations to which this package will be distributed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  PackageImport  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="PackageImportType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Defines an import package</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PackageType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Package  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="PackageType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Defines a package</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MessageType">
+				<xsd:attribute name="packageId" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>An identifier, unique to the source, used to reference the package</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="activate" type="xsd:boolean" default="true">
+					<xsd:annotation>
+						<xsd:documentation>The package is either active or inactive. Used to indicated to downstream system that it's safe to use the package.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="providerGroup" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Defines the parent entity of the package Content Provider. Eg. for use in defining security adound the package.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Message  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="MessageType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Defines a message structure</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="schemaVersion" type="xsd:string" use="required" fixed="2.7.0">
+			<xsd:annotation>
+				<xsd:documentation>The version of schema this package conforms to. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.1</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="origin" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Used to identify the source that generated the package</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="priority" type="priorityType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Used to identify the source that generated the package</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="publishedDate" type="xsd:dateTime" use="required">
+			<xsd:annotation>
+				<xsd:documentation>The time and date of when an instance document was generated. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.3</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Playback  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="PlaybackType">
+		<xsd:sequence>
+			<xsd:element name="AccessControl" type="ContentProtectionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Devices" type="TargetDeviceListType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  ReviewList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="ReviewListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of reviews</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Review" type="FeatureReviewType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  RatingList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="RatingListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of ratings</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Rating" type="RatingType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Rating  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="RatingType">
+		<xsd:sequence>
+			<xsd:element name="Score" type="xsd:nonNegativeInteger"/>
+			<xsd:element name="OutOf" type="xsd:positiveInteger"/>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TagList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="TagListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of tags. Tags are key and value pairs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Tag" type="KeyValueType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>A list of arbitrary keys and values that could be used to carry additional metadata specific to the content. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.57</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TapeList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="TapeListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of tape reels</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Tape" type="TapeMediaItemType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TapeMediaItem  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="TapeMediaItemType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a tape media item</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MediaItemType">
+				<xsd:sequence>
+					<xsd:element name="Title" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="FormatDescription" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="AspectRatio" type="AspectRatioType"/>
+					<xsd:element name="ResolutionDescription" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Sound" type="AvailableAudioType" default="Stereo" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Identifies the available audio type</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ClosedCaptions" type="xsd:boolean" default="false" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Indicates whether closed captioning is carried with the content</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Segments" type="SegmentListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Tape segments</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="libraryId" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>In-house tape library identifier</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="originalId" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Original, or owners' tape identifier</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="reelNumber" type="xsd:positiveInteger" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reel number</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="automationId" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Automation identifier</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="class" type="TapeClassificationType"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  SegmentList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="SegmentListType">
+		<xsd:annotation>
+			<xsd:documentation>A list of tape segments</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Segment" type="SegmentType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Tape segment</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Segment  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="SegmentType">
+		<xsd:annotation>
+			<xsd:documentation>A video tape segment</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Title" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Segment title</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Category" type="SegmentCategoryType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Segment Category, ie. Spot, programme</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SOM" type="xsd:duration">
+				<xsd:annotation>
+					<xsd:documentation>Time point for start of segment</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EOM" type="xsd:duration">
+				<xsd:annotation>
+					<xsd:documentation>Time point for end of segment</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="segmentNumber" type="xsd:positiveInteger" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Segment number</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  TargetDeviceList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="TargetDeviceListType">
+		<xsd:sequence>
+			<xsd:element name="Device" type="TargetDeviceType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>The intended playback device. See document FD-T-E-2590 (Issue 1, Rev 2), section 3.1.1.38</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoFileList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="VideoAssetListType">
+		<xsd:attribute name="base" type="xsd:anyURI" use="required"/>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoFile  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="VideoFileType">
+		<xsd:complexContent>
+			<xsd:extension base="BinaryMediaItemType">
+				<xsd:attribute name="bitrate" type="xsd:nonNegativeInteger" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Average bitrate in bits per second</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="width" type="xsd:positiveInteger" use="required"/>
+				<xsd:attribute name="height" type="xsd:positiveInteger" use="required"/>
+				<xsd:attribute name="framerate" type="xsd:positiveInteger" default="25"/>
+				<xsd:attribute name="interlaced" type="xsd:boolean" default="false"/>
+				<xsd:attribute name="assetId" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Unique id of the media that is consistant across multiple offers for the same media asset.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoLocation  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="VideoLocationType">
+		<xsd:complexContent>
+			<xsd:extension base="HostedMediaItemType">
+				<xsd:attribute name="variant" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Description of the content profile. A typical usage would be to provide low, normal and HD options</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="assetId" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Unique id of the media that is consistant across multiple offers for the same media asset.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoImportList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="VideoImportListType">
+		<xsd:sequence>
+			<xsd:element name="Video" type="VideoImportMediaType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoList  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="VideoListType">
+		<xsd:sequence>
+			<xsd:element name="Video" type="VideoMediaType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoMedia  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="VideoMediaType">
+		<xsd:complexContent>
+			<xsd:extension base="MediaItemType">
+				<xsd:sequence>
+					<xsd:element name="Duration" type="xsd:duration"/>
+					<xsd:element name="AspectRatio" type="AspectRatioType"/>
+					<xsd:element name="ClosedCaptions" type="xsd:boolean" default="false" minOccurs="0"/>
+					<xsd:element name="Sound" type="AvailableAudioType" default="Stereo" minOccurs="0"/>
+					<xsd:element name="Playback" type="PlaybackType" minOccurs="0"/>
+					<xsd:element name="Segments" type="SegmentListType" minOccurs="0"/>
+					<xsd:element name="Files">
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="VideoAssetListType">
+									<xsd:choice maxOccurs="unbounded">
+										<xsd:element name="File" type="VideoFileType" maxOccurs="unbounded"/>
+										<xsd:element name="Location" type="VideoLocationType" maxOccurs="unbounded"/>
+									</xsd:choice>
+								</xsd:extension>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="class" type="VideoClassificationType" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  VideoMedia  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:complexType name="VideoImportMediaType">
+		<xsd:complexContent>
+			<xsd:extension base="MediaItemType">
+				<xsd:sequence>
+					<xsd:element name="Title" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="AspectRatio" type="AspectRatioType"/>
+					<xsd:element name="ResolutionDescription" type="xsd:string" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>HD/SD Description</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Sound" type="AvailableAudioType" default="Stereo" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Identifies the available audio type</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ClosedCaptions" type="xsd:boolean" default="false" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Indicates whether closed captioning is carried with the content</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Segments" type="SegmentListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Tape segments</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="reelNumber" type="xsd:positiveInteger" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reel number</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="filename" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Filename of the video asset</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="class" type="TapeClassificationType"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  FormatType  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<xsd:simpleType name="VideoFormatType">
+		<xsd:annotation>
+			<xsd:documentation>Used to communicate the video format (e.g. SD, HD or 3D)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="SD">
+				<xsd:annotation>
+					<xsd:documentation>Standard Definition</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="HD">
+				<xsd:annotation>
+					<xsd:documentation>High Definition</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="3D">
+				<xsd:annotation>
+					<xsd:documentation>3D</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="UltraHD">
+				<xsd:annotation>
+					<xsd:documentation>Ultra High Definition, also called 4K</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

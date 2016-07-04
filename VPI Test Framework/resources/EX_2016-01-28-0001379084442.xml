@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FeatureExport xmlns="http://foxtel.tv/engineering/bcms/schemas/exchange/2/5"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               activate="true"
+               origin="IBMS"
+               packageId="9084442"
+               publishedDate="2016-01-28T10:55:29.0Z"
+               schemaVersion="2.5.0">
+  <Header>
+      <ExhibitionWindow end="2017-12-31T12:59:59.0Z"
+                        offerType="PPV-Library"
+                        price="0.00"
+                        start="2014-06-30T14:00:00.0Z"/>
+      <Terms>
+         <Term type="CA900006">
+            <Parameter name="profile"/>
+            <Parameter name="policy"/>
+            <Parameter name="download">true</Parameter>
+            <Parameter name="streaming">false</Parameter>
+            <Parameter name="rentalHours">48</Parameter>
+            <Parameter name="retentionPeriod">P28D</Parameter>
+            <Parameter name="timeToStartView">P7D</Parameter>
+         </Term>
+         <Term type="PR1">
+            <Parameter name="product">VOD</Parameter>
+         </Term>
+      </Terms>
+      <Destinations accessTerm="CA900006" destinationID="nagra" productTerm="PR1">
+         <Destination accessTerm="CA900006"
+                      destinationID="nagra"
+                      deviceId="STBmanaged"
+                      productTerm="PR1"/>
+      </Destinations>
+  </Header>
+  <Feature>
+      <Description bugging="false"
+                   category="MOVIE"
+                   groupID=""
+                   library="true"
+                   programmeId="6082959"
+                   providerId="FBO"
+                   showID=""
+                   versionCopyId="9069841"
+                   versionId="9040775">
+         <Title>Black Snake Moan</Title>
+         <ShortSynopsis>In this story of love and redemption an abused young woman is healed by a man who plays the Blues.</ShortSynopsis>
+         <LongSynopsis/>
+         <MarketingMessage>A young woman, bashed and left for dead is healed by a man who plays the Blues.</MarketingMessage>
+         <VideoFormat>SD</VideoFormat>
+         <NominalDuration>110 Mins</NominalDuration>
+         <Genre main="4" sub="4">Movie:Drama</Genre>
+         <ParentalRating>MA15+</ParentalRating>
+         <Subtitled>false</Subtitled>
+         <Production>
+            <Year>2006</Year>
+            <Colour>Colour</Colour>
+            <Languages>EN</Languages>
+            <Country>US</Country>
+            <Credits>
+               <Credit role="Director">
+                  <Person>Craig Brewer</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Samuel L. Jackson</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Christina Ricci</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Justin Timberlake</Person>
+               </Credit>
+            </Credits>
+         </Production>
+         <ExternalRef>
+            <ExternalRef site="imdb.com">
+               <TitleId>0462200</TitleId>
+            </ExternalRef>
+         </ExternalRef>
+      </Description>
+  </Feature>
+  <Media>
+      <Videos>
+         <Video class="feature">
+            <Duration>PT6645S</Duration>
+            <AspectRatio>16x9</AspectRatio>
+            <ClosedCaptions>false</ClosedCaptions>
+            <Sound>Stereo</Sound>
+            <Files base="">
+               <File assetId="ON106427"
+                     bitrate="8000"
+                     contentType="video/mp2ts"
+                     fileSize="1584815936"
+                     filename="ON106427.ts"
+                     height="576"
+                     width="720"/>
+            </Files>
+         </Video>
+      </Videos>
+      <Images>
+         <ImageSource base="">
+            <Image class="poster"
+                   contentType="image/jpeg"
+                   fileSize="1273891"
+                   filename="I@041039.jpg"
+                   imageId="I@041039"/>
+            <Image class="landscape"
+                   contentType="image/jpeg"
+                   fileSize="2528687"
+                   filename="I@041039_L.jpg"
+                   imageId="I@041039_L"/>
+         </ImageSource>
+      </Images>
+  </Media>
+</FeatureExport>

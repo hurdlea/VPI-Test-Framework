@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FeatureExport xmlns="http://foxtel.tv/engineering/bcms/schemas/exchange/2/5"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               activate="true"
+               origin="IBMS"
+               packageId="9079097"
+               publishedDate="2016-03-22T09:33:57.0Z"
+               schemaVersion="2.5.0">
+  <Header>
+      <ExhibitionWindow end="2016-02-01T12:59:59.0Z"
+                        offerType="PPV"
+                        price="0.00"
+                        start="2014-01-31T13:00:00.0Z"/>
+      <Terms>
+         <Term type="CA900006">
+            <Parameter name="profile"/>
+            <Parameter name="policy"/>
+            <Parameter name="download">true</Parameter>
+            <Parameter name="streaming">false</Parameter>
+            <Parameter name="rentalHours">24</Parameter>
+            <Parameter name="retentionPeriod">P28D</Parameter>
+            <Parameter name="timeToStartView">P7D</Parameter>
+         </Term>
+         <Term type="PR1">
+            <Parameter name="product">VOD</Parameter>
+         </Term>
+      </Terms>
+      <Destinations accessTerm="CA900006" destinationID="nagra" productTerm="PR1">
+         <Destination accessTerm="CA900006"
+                      destinationID="nagra"
+                      deviceId="STBmanaged"
+                      productTerm="PR1"/>
+      </Destinations>
+  </Header>
+  <Feature>
+      <Description bugging="false"
+                   category="MOVIE"
+                   groupID=""
+                   library="true"
+                   programmeId="9001486"
+                   providerId="AO"
+                   showID=""
+                   versionCopyId="9003382"
+                   versionId="9001961">
+         <Title>Inglorious Bitches</Title>
+         <ShortSynopsis>In a World War 2 atmosphere,2 young women (Anna Polina&amp; Tarra White), witness their lovesr killed by the enemy, join the resistance &amp; recruit former prostitutes to train to become formidable fighters, experts in arms &amp; charms.</ShortSynopsis>
+         <LongSynopsis>Starring Anna Polina! Directed by multi awarded Max Candy, Inglorious Bitches stars an army of renowned beautiful and glamorous girls - Tarra White, Aleska Diamond, Anna Polina, Suzy Carina and Cindy Dollar, amongst others - who ferociously fight for peace. Explosions, tanks, orgies, girl fights... The 250.000 feature is set in astonishing decors recreating a World War II atmosphere, where two young women (Anna Polina and Tarra White), who saw their lover killed by the enemy, join the resistance and recruit former prostitutes to train to become formidable fighters, experts in arms and charms. Running a brothel frequented by the non-commissioned officers of the enemy, our ladies of the resistance receive strategic information by occupying and preparing a secret operation that could change the course of the war. Orgy scenes with dozens of participants, torrid threesomes, fetishists, uniforms and lesbians: all is here to make a grand movie.</LongSynopsis>
+         <MarketingMessage>Orgy scenes with dozens of participants, torrid threesomes, fetishists &amp; uniforms: all is here to make a grand movie.</MarketingMessage>
+         <VideoFormat>SD</VideoFormat>
+         <NominalDuration>85 Mins</NominalDuration>
+         <Genre main="15" sub="2">Special Interest:Adult</Genre>
+         <ParentalRating>R18+</ParentalRating>
+         <Subtitled>false</Subtitled>
+         <Production>
+            <Year>2011</Year>
+            <Colour>Colour</Colour>
+            <Country>FR</Country>
+            <Credits>
+               <Credit role="Actor">
+                  <Person>Anna Polina</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Tarra White</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Aleska Diamond</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Eufrat Mai</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Cindy Dollar</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Silvie Deluxe</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Nataly </Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Jenna Lovely</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Defrancesca Gallardo</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Suzie Carina</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Bridget </Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Anastasia Devine</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Kety Bleins</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Michelle (Xiii)</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Nikki Sweet</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Kristi Lust</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Thomas Lee</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Neeo </Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>George Uhl</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Wein Lewis</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Steve Q</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Lenny Ewil</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Jay Dee</Person>
+               </Credit>
+               <Credit role="Actor">
+                  <Person>Tim (Vi)</Person>
+               </Credit>
+               <Credit role="Director">
+                  <Person>Max Candy</Person>
+               </Credit>
+            </Credits>
+         </Production>
+      </Description>
+  </Feature>
+  <Media>
+      <Videos>
+         <Video class="feature">
+            <Duration>PT5115S</Duration>
+            <AspectRatio>16x9</AspectRatio>
+            <ClosedCaptions>false</ClosedCaptions>
+            <Sound>Stereo</Sound>
+            <Files base="">
+               <File assetId="ON092033"
+                     bitrate="8000"
+                     contentType="video/mp2ts"
+                     fileSize="1221211528"
+                     filename="ON092033.ts"
+                     height="576"
+                     width="720"/>
+            </Files>
+         </Video>
+      </Videos>
+      <Images>
+         <ImageSource base="">
+            <Image class="poster"
+                   contentType="image/jpeg"
+                   fileSize="1709878"
+                   filename="I@036273.jpg"
+                   imageId="I@036273"/>
+            <Image class="landscape"
+                   contentType="image/jpeg"
+                   fileSize="2853547"
+                   filename="I@036273_L.jpg"
+                   imageId="I@036273_L"/>
+         </ImageSource>
+      </Images>
+  </Media>
+</FeatureExport>

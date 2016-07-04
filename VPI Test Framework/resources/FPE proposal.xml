@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<FeatureExport xmlns="http://foxtel.tv/engineering/vpi/schemas/exchange/3/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" signature="" origin="IBMS" publishedDate="2016-02-17T16:15:44.0Z" schemaVersion="3.0.0" xsi:schemaLocation="http://foxtel.tv/engineering/vpi/schemas/exchange/3/0 file:///C:/Users/hurdlea/Desktop/FPE-3.0.xsd">
+	<!-- Offer is a section purely for the Offer specific data -->
+	<!-- commands signal the required business operation in    -->
+	<!-- video CMS: create,update,expire.                      -->
+	<Offer id="11348150" activate="true" operation="create">
+		<ExhibitionWindow start="2016-02-14T13:00:00.0Z" end="2016-12-01T12:59:59.0Z" price="0.00" offerType="Subscription"/>
+		<ProviderId>PTO</ProviderId>
+		<Distributor reportingCode="DSY" name="Disney"/>
+		<Deal purchaseId="" groupId=""/>
+		<Presentation>
+			<DisplayAsNew>P7D</DisplayAsNew>
+			<DisplayAsLastChance>P7D</DisplayAsLastChance>
+			<!-- Categories allow the scheduler to define editorial placements -->
+			<!-- a category can have optional start and end dates. The path    -->
+			<!-- specifies the required hierachy.                              -->
+			<Categories>
+				<Category start="2016-02-14T13:00:00.0Z" end="2016-12-01T12:59:59.0Z" path="Kids/Pre-School"/>
+			</Categories>
+		</Presentation>
+		<ParentalRating>G</ParentalRating>
+		<ConsumerWarnings>
+			<Warning order="1" severity="2" label="Language" code="l"/>
+		</ConsumerWarnings>
+		<VideoFormat>HD</VideoFormat>
+		<Sound>Digital</Sound>
+		<Subtitled>false</Subtitled>
+		<!-- Multiple title offer bundle e.g. Star Wars Box-Set reference sub-offer content  -->
+		<!-- and media this is an optional section that is only required for multiple titles -->
+		<ContentGrouping>
+			<ContentGroup name="main title">
+				<FeatureRef id="Feature123456"/>
+				<VideoRef id="ON123456" class="feature"/>
+				<VideoRef id="ON123458" class="trailer"/>
+				<ImageRef id="I@123456" format="JPG" class="landscape"/>
+			</ContentGroup>
+		</ContentGrouping>
+		<Terms>
+			<Term type="LR01">
+				<Parameter name="streaming">true</Parameter>
+				<Parameter name="download">true</Parameter>
+				<Parameter name="retentionPeriod">"P1Y2M10DT2H30M</Parameter>
+			</Term>
+			<Term type="PR01">
+				<Parameter name="product">VOD</Parameter>
+			</Term>
+		</Terms>
+	</Offer>
+	<Feature id="Feature12345678">
+		<Description category="TV_EPS" library="true" programmeId="000000436468" titleId="296361">
+			<Title>Sarah &amp; Duck</Title>
+			<ShortSynopsis>When their tandem bike gets a flat tyre, Sarah &amp; Duck hope to get help from the local bike shop.</ShortSynopsis>
+			<LongSynopsis/>
+			<NominalDuration>PT7M</NominalDuration>
+			<Genre main="10" sub="10">Kids and Family:Pre-School</Genre>
+			<Production>
+				<Year>2013</Year>
+				<Colour>Colour</Colour>
+				<Country>GB</Country>
+			</Production>
+			<SeasonNumber>1</SeasonNumber>
+			<EpisodeNumber>32</EpisodeNumber>
+			<EpisodeTitle>Puncture Pump</EpisodeTitle>
+		</Description>
+		<ContentIdentification>
+			<ContentIdentifier context="show" provider="hww">hww_titleid</ContentIdentifier>
+			<ContentIdentifier context="show" provider="foxtel">ibms_showid</ContentIdentifier>
+			<ContentIdentifier context="programme" provider="IMDB">123456789</ContentIdentifier>
+			<ContentIdentifier context="programme" provider="TMSID">987654321</ContentIdentifier>
+			<ContentIdentifier context="programme" provider="foxtel">programme_id</ContentIdentifier>
+			<ContentIdentifier context="event" provider="hww">event_id</ContentIdentifier>
+			<ContentIdentifier context="group" provider="foxtel">ibms_group_id</ContentIdentifier>
+			<ContentIdentifier context="offer" provider="foxtel">offer_id</ContentIdentifier>
+			<ContentIdentifier context="season" provider="foxtel">SPING-2015</ContentIdentifier>
+		</ContentIdentification>
+		<Images>
+			<ImageSource>
+				<Image class="poster" scope="programme" contentType="image/jpeg" fileSize="1294603" filename="I@056921.jpg" imageId="I@056921.jpg"/>
+				<Image class="landscape" scope="programme" contentType="image/jpeg" fileSize="2110563" filename="I@056921_L.jpg" imageId="I@056921_L.jpg"/>
+				<!-- An optional scope allows the definition of multiple image types to cover heirarchical show/seasonstructures -->
+				<Image class="poster" scope="show" contentType="image/jpeg" fileSize="1294603" filename="I@056921.jpg" imageId="I@056921.jpg"/>
+				<Image class="landscape" scope="show" contentType="image/jpeg" fileSize="2110563" filename="I@056921_L.jpg" imageId="I@056921_L.jpg"/>
+			</ImageSource>
+		</Images>
+	</Feature>
+	<Media>
+		<Videos>
+			<Video class="feature" assetId="ON218700" versionId="9477085" versionCopyId="9646892" operation="create">
+				<LicenseWindow start="2016-02-14T13:00:00.0Z" end="2016-12-14T12:59:59.0Z"/>
+				<MediaDescription>Sarah &amp; Duck Episode - Puncture Pump</MediaDescription>
+				<!-- Optional description that is useful for associated bonus material/trailers -->
+				<ParentalRating>G</ParentalRating>
+				<ConsumerWarnings/>
+				<Duration>PT424S</Duration>
+				<AspectRatio>16x9</AspectRatio>
+				<ClosedCaptions>false</ClosedCaptions>
+				<Playback>
+					<AccessControl>
+						<Parameter name="contentId">FXTL_ON218700</Parameter>
+					</AccessControl>
+				</Playback>
+				<Files>
+					<File assetId="ON104718_SD_PDL" bitrate="1800000" contentType="video/mp2ts" fileSize="1944090140" filename="ON104718-576p25.ts" height="576" width="720" resolution="SD" sound="Stereo"/>
+					<File assetId="ON104718_HD_PDL" bitrate="4500000" contentType="video/mp2ts" fileSize="3888090140" filename="ON104718-720p50.ts" height="720" width="1280" resolution="HD" sound="Digital"/>
+					<Location assetId="ON104718_SD_ABR" contentType="smooth" nominalSize="1944090140" uri="http://origin.foxtel.com.au/location/ON104718/ON104718_hss.ism/manifest_sd" variant="medium" resolution="SD" sound="Stereo"/>
+					<Location assetId="ON104718_HD_ABR" contentType="smooth" nominalSize="3888090140" uri="http://origin.foxtel.com.au/location/ON104718/ON104718_hss.ism/manifest_hd" variant="high" resolution="HD" sound="Digital"/>
+				</Files>
+			</Video>
+		</Videos>
+	</Media>
+</FeatureExport>
