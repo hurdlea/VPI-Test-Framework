@@ -4,7 +4,7 @@
 # Step definition for creating and managing offer test cases                   #
 #                                                                              #
 #                                                                              #
-# 2016-07-01 Alan Hurdle - Inital Version                                      #
+# 2016-07-01 Alan Hurdle - Initial Version                                     #
 #                                                                              #
 # Copyright (c) 2016, Foxtel Management All rights reserved.                   #
 # ============================================================================ #

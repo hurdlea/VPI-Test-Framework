@@ -8,7 +8,7 @@ Feature: Content offers will be migrated to the new Nagra CMS content model when
           And It has new programme media ON123456
           And The programme is valid in 10 minutes for 100 days
          Then I export the offer as FPE3.0
-          And I write it as Base Offer
+          And I write it in Base Offer
         
 		# This is potentially the better option provided we can get access to the CMS
 		# to verify if the ingested offer content matches the intent of the FPE sequence. 
