@@ -39,7 +39,7 @@ Scenario: Create an HD Subscription offer which will be shared (TC1c)
 Scenario: Create a shared HD PPV-Library offer (TC1d)
     Given I share a PPV-Library offer 00000004 for programme 1234568
       And The offer is active now for 2 hours
-      And It has new programme media ON123458
+      And It has programme media ON123458
       And The programme is valid for 100 days
      Then I export the offer as FPE3.0
       And I write it in new_offer_tests as tc1d
