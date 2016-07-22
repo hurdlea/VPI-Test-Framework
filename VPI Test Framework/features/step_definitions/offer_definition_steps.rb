@@ -74,11 +74,11 @@ Then(/^I export the offer as (FPE\d.\d)$/) do |version|
 end
 
 # Save the exported fpe to the file system
-Then(/^I write it as (.*)$/) do |name|
-  name.tr!(' ', '_')
+Then(/^I write it in (\S*) as (\S*)$/) do |location, name|
+
   path = File.join(File.dirname(__FILE__), '..', '..', name)
   Dir.mkdir path if !Dir.exist?(path)
-  filename = 'EX_' + Time.now.strftime("%Y-%m-%d-%H%M%S") + @fpe['offer']['id'].to_s + '.xml'
+  filename = name + '.xml'
   f = File.open(File.join(path, filename), 'w')
   f.write(@xml)
   
