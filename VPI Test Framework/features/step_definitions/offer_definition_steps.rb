@@ -18,6 +18,7 @@ Given(/^I (\w+) a (Subscription[-A-Za-z0-9]*|PPV[-A-Za-z0-9]*) offer (\d+) for p
 
   # Set the asset information based from the test specification
   fpe['offer']['id'] = offer_number
+  fpe['content']['programme'] = programme
   fpe.setOfferType(offer_type)
 end
 
@@ -33,7 +34,7 @@ Given(/^The (\w+) is (?:active|valid) in (\d+) (\w+) for (\d+) (\w+)$/) do |type
 end
 
 # Generate a time window from now for a specified duration
-Given(/^The (\w+) is (?:active|valid) now for (\d+) (\w+)$/) do |type, end_duration, end_units|
+Given(/^The (\w+) is (?:active|valid)(?: now){0,1} for (\d+) (\w+)$/) do |type, end_duration, end_units|
   now = Time.now.utc
   window = {
     :start => now,
@@ -44,7 +45,7 @@ Given(/^The (\w+) is (?:active|valid) now for (\d+) (\w+)$/) do |type, end_durat
 end
 
 # Get the media operation and media number of the fpe
-Given(/^It (?:has|had) (\w+) programme media (\w+)$/) do |programme_operation, asset|
+Given(/^It (?:has |had ){0,1}(\w+) programme media (\w+)$/) do |programme_operation, asset|
   resolution = "SD"
   # Set the asset information based from the test specification
   @fpe.setProgrammeAsset(asset)
@@ -53,7 +54,7 @@ Given(/^It (?:has|had) (\w+) programme media (\w+)$/) do |programme_operation, a
 end
 
 # Get the media operation, number and content resolution of the fpe
-Given(/^It (?:has|had) (\w+) programme media (\w+) in (HD|SD)$/) do |programme_operation, asset, resolution|
+Given(/^It (?:has |had ){0,1}(\w+) programme media (\w+) in (HD|SD)$/) do |programme_operation, asset, resolution|
   # Set the asset information based from the test specification
   # Set the asset information based from the test specification
   @fpe.setProgrammeAsset(asset)
@@ -73,10 +74,18 @@ Then(/^I export the offer as (FPE\d.\d)$/) do |version|
   @xml = @fpe.export_xml(version)  
 end
 
+# Export the fpe information as a specific schema version 
+Then(/^I export the offer as (CR62)$/) do |version|
+  version = get_version_symbol('FPE2.5')
+  # TODO Set the RedBee fields accordingly here
+  
+  @xml = @fpe.export_xml(version)  
+end
+
 # Save the exported fpe to the file system
 Then(/^I write it in (\S*) as (\S*)$/) do |location, name|
 
-  path = File.join(File.dirname(__FILE__), '..', '..', name)
+  path = File.join(File.dirname(__FILE__), '..', '..', location)
   Dir.mkdir path if !Dir.exist?(path)
   filename = name + '.xml'
   f = File.open(File.join(path, filename), 'w')

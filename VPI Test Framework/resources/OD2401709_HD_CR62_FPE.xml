@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FeatureExport xmlns="http://foxtel.tv/engineering/bcms/schemas/exchange/2/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activate="true" origin="RBM" packageId="RBMOD2401709" publishedDate="2015-09-17T03:51:41Z" schemaVersion="2.5.0">
+  <Header>
+    <ExhibitionWindow end="2015-12-09T04:59:59+11:00" offerType="PPV-HD" price="6.00" start="2015-09-16T05:59:00+10:00"/>
+    <Terms>
+      <Term type="LR1">
+        <Parameter name="rentalHours">48</Parameter>
+        <Parameter name="retentionPeriod">P28D</Parameter>
+        <Parameter name="download">true</Parameter>
+        <Parameter name="timeToStartView">P7D</Parameter>
+      </Term>
+      <Term type="PR1">
+        <Parameter name="product">VOD</Parameter>
+      </Term>
+    </Terms>
+    <Destinations accessTerm="LR1" destinationID="nagra" productTerm="PR1">
+      <Destination accessTerm="LR1" destinationID="nagra" deviceId="STBmanaged" productTerm="PR1"/>
+    </Destinations>
+  </Header>
+  <Feature>
+    <Description bugging="true" category="MOVIE" library="false" programmeId="9255594" providerId="OD2">
+      <Title>Avengers: Age Of Ultron</Title>
+      <ShortSynopsis>As the fate of Earth hangs in the balance, the Marvel team reassemble and is put to the ultimate test as its superheroes battle a technological terrorist hell-bent on human extinction.</ShortSynopsis>
+      <LongSynopsis>Earth's mightiest heroes reunite in order to shut town a technological terrorist. Press select to rent now - $6.00</LongSynopsis>
+      <VideoFormat>HD</VideoFormat>
+      <Widescreen>true</Widescreen>
+      <NominalDuration>PT135M</NominalDuration>
+      <Genre main="04" sub="01">Movie:Action/Adventure</Genre>
+      <ParentalRating>M</ParentalRating>
+      <ConsumerWarnings>v</ConsumerWarnings>
+      <Subtitled>false</Subtitled>
+      <Production>
+        <Year>2015</Year>
+        <Colour>Colour</Colour>
+      </Production>
+    </Description>
+  </Feature>
+  <Media>
+    <Videos>
+      <Video class="feature">
+        <Duration>PT2H15M39.04S</Duration>
+        <AspectRatio>16x9</AspectRatio>
+        <ClosedCaptions>true</ClosedCaptions>
+        <Sound>Digital</Sound>
+        <Segments>
+          <Segment segmentNumber="1">
+            <Category>Programme</Category>
+            <SOM>PT0M</SOM>
+            <EOM>PT2H15M39.04S</EOM>
+            <!-- Reduced to 1 segment: SO:0 EO:0 TD:8139.04 @ FPS:25 -->
+          </Segment>
+        </Segments>
+        <Files base="">
+          <File assetId="RBM9255594_OD2401709" bitrate="7000172" contentType="video/mp2ts" fileSize="7139721684" filename="OD2401709_720P50_PVOD_516.ts" height="720" width="1280"/>
+        </Files>
+      </Video>
+    </Videos>
+    <Images>
+      <ImageSource base="">
+        <Image class="optionalOther" contentType="image/png" fileSize="0" filename="none"/>
+      </ImageSource>
+    </Images>
+  </Media>
+  <!-- Source: Red Bee Media Reverse EPG / VOD Service for Foxtel - Foxtel (Production) -->
+  <!-- FPE Type: PVOD -->
+  <!-- T1442461901 H10.190.50.172 10.190.50.170 P24633 E8367970 J2893451 -->
+  <!-- Capture Job UUID: e02fc4d7-22ba-4e0b-96be-39a7a23724b7 -->
+  <!-- FPE IDs: 3846905 / CR62 / 9f09a39b-5264-4d33-911b-f9c564de967b -->
+</FeatureExport>

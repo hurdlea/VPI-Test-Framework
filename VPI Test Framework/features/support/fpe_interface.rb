@@ -35,7 +35,7 @@ def select_programme_operation(operation, fpe)
   case operation.downcase 
   when 'create','created','new'
     fpe.newProgramme
-  when 'update','existing'
+  when 'update','existing', 'shares', 'shared'
     fpe.updateProgramme
   when 'split','separate'
     fpe.splitProgramme

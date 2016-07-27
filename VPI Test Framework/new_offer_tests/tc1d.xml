@@ -1,8 +1,7 @@
-
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<FeatureExport xmlns="http://foxtel.tv/engineering/vpi/schemas/exchange/3/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" signature="" origin="IBMS" publishedDate="2016-07-01T05:37:44Z" schemaVersion="3.0.0">
-  <Offer id="00000001" activate="true" operation="create">
-    <ExhibitionWindow start="2016-07-01T05:47:44Z" end="2016-07-01T07:37:44Z" price="0.00" offerType="Subscription"/>
+<FeatureExport xmlns="http://foxtel.tv/engineering/vpi/schemas/exchange/3/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" signature="" origin="IBMS" publishedDate="2016-07-25T01:50:29Z" schemaVersion="3.0.0">
+  <Offer id="00000004" activate="true" operation="create">
+    <ExhibitionWindow start="2016-07-25T01:50:29Z" end="2016-07-25T03:50:29Z" price="0.00" offerType="PPV-Library"/>
     <ProviderId>DSY</ProviderId>
     <Distributor reportingCode="DSY" name="DSY"/>
     <Deal purchaseId="" groupId=""/>
@@ -12,32 +11,34 @@
       <Warning order="2" severity="1" label="Violence" code="v"/>
       <Warning order="3" severity="1" label="Supernatural Themes" code="st"/>
     </ConsumerWarnings>
-    <VideoFormat>SD</VideoFormat>
+    <VideoFormat>HD</VideoFormat>
     <Sound>Stereo</Sound>
     <Subtitled>false</Subtitled>
     <ContentGrouping>
       <ContentGroup name="main title">
-        <VideoRef id="ON123456" class="feature"/>
+        <VideoRef id="ON123458" class="feature"/>
         <ImageRef id="I@12345_L" format="JPG" class="landscape"/>
         <ImageRef id="I@12345" format="JPG" class="poster"/>
       </ContentGroup>
     </ContentGrouping>
     <Terms>
-      <Term type="CA900004">
+      <Term type="CA900006">
         <Parameter name="streaming">true</Parameter>
         <Parameter name="download">true</Parameter>
+        <Parameter name="rentalHours">48</Parameter>
         <Parameter name="retentionPeriod">P28D</Parameter>
+        <Parameter name="rentalHours">P7D</Parameter>
       </Term>
       <Term type="PR01">
         <Parameter name="product">VOD</Parameter>
       </Term>
-        <Destinations accessTerm="CA900004" destinationID="nagra" productTerm="PR1">
-          <Destination accessTerm="CA900004" destinationID="nagra" deviceId="STBmanaged" productTerm="PR1"/>
+        <Destinations accessTerm="CA900006" destinationID="nagra" productTerm="PR1">
+          <Destination accessTerm="CA900006" destinationID="nagra" deviceId="STBmanaged" productTerm="PR1"/>
         </Destinations>
       </Terms>
   </Offer>
   <Feature id="">
-    <Description category="TV_EPS" library="true" programmeId="1234567" titleId="234567">
+    <Description category="TV_EPS" library="true" programmeId="1234568" titleId="234567">
       <Title>Title</Title>
       <ShortSynopsis>Some description</ShortSynopsis>
       <LongSynopsis>Some description</LongSynopsis>
@@ -61,8 +62,8 @@
   </Feature>
   <Media>
     <Videos>
-      <Video class="feature" assetId="ON123456" versionId="1234567" versionCopyId="456789" operation="create">
-        <LicenseWindow start="2016-07-01T05:47:44Z" end="2016-10-09T05:37:44Z"/>
+      <Video class="feature" assetId="ON123458" versionId="1234567" versionCopyId="456789" operation="update">
+        <LicenseWindow start="2016-07-25T01:50:29Z" end="2016-11-02T01:50:29Z"/>
         <MediaDescription>Title</MediaDescription>
         <ParentalRating>G</ParentalRating>
         <ConsumerWarnings>
@@ -75,12 +76,14 @@
         <ClosedCaptions>false</ClosedCaptions>
         <Playback>
           <AccessControl>
-            <Parameter name="contentId">FXTL_ON123456</Parameter>
+            <Parameter name="contentId">FXTL_ON123458</Parameter>
           </AccessControl>
         </Playback>
         <Files>
-          <File assetId="ON123456_SD_PDL" bitrate="1800000" contentType="video/mp2ts" fileSize="1944090140" filename="ON123456-576p25.ts" height="576" width="720" resolution="SD" sound="Stereo"/>
-          <Location assetId="ON123456_SD_ABR" contentType="smooth" nominalSize="1944090140" uri="http://origin.foxtel.com.au/location/ON123456/ON123456_hss.ism/manifest_sd" variant="medium" resolution="SD" sound="Stereo"/>
+          <File assetId="ON123458_SD_PDL" bitrate="1800000" contentType="video/mp2ts" fileSize="1944090140" filename="ON123458-576p25.ts" height="576" width="720" resolution="SD" sound="Stereo"/>
+          <File assetId="ON123458_HD_PDL" bitrate="4500000" contentType="video/mp2ts" fileSize="3888090140" filename="ON123458-720p50.ts" height="720" width="1280" resolution="HD" sound="Digital"/>
+          <Location assetId="ON123458_SD_ABR" contentType="smooth" nominalSize="1944090140" uri="http://origin.foxtel.com.au/location/ON123458/ON123458_hss.ism/manifest_sd" variant="medium" resolution="SD" sound="Stereo"/>
+          <Location assetId="ON123458_HD_ABR" contentType="smooth" nominalSize="3888090140" uri="http://origin.foxtel.com.au/location/ON123458/ON123458_hss.ism/manifest_hd" variant="high" resolution="HD" sound="Digital"/>
         </Files>
       </Video>
     </Videos>

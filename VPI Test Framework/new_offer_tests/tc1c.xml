@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FeatureExport xmlns="http://foxtel.tv/engineering/vpi/schemas/exchange/3/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" signature="" origin="IBMS" publishedDate="2016-07-25T01:50:29Z" schemaVersion="3.0.0">
+  <Offer id="00000003" activate="true" operation="create">
+    <ExhibitionWindow start="2016-07-25T01:50:29Z" end="2016-07-25T03:50:29Z" price="0.00" offerType="Subscription"/>
+    <ProviderId>DSY</ProviderId>
+    <Distributor reportingCode="DSY" name="DSY"/>
+    <Deal purchaseId="" groupId=""/>
+    <ParentalRating>G</ParentalRating>
+    <ConsumerWarnings>
+      <Warning order="1" severity="1" label="Language" code="l"/>
+      <Warning order="2" severity="1" label="Violence" code="v"/>
+      <Warning order="3" severity="1" label="Supernatural Themes" code="st"/>
+    </ConsumerWarnings>
+    <VideoFormat>HD</VideoFormat>
+    <Sound>Stereo</Sound>
+    <Subtitled>false</Subtitled>
+    <ContentGrouping>
+      <ContentGroup name="main title">
+        <VideoRef id="ON123458" class="feature"/>
+        <ImageRef id="I@12345_L" format="JPG" class="landscape"/>
+        <ImageRef id="I@12345" format="JPG" class="poster"/>
+      </ContentGroup>
+    </ContentGrouping>
+    <Terms>
+      <Term type="CA900004">
+        <Parameter name="streaming">true</Parameter>
+        <Parameter name="download">true</Parameter>
+        <Parameter name="retentionPeriod">P28D</Parameter>
+      </Term>
+      <Term type="PR01">
+        <Parameter name="product">VOD</Parameter>
+      </Term>
+        <Destinations accessTerm="CA900004" destinationID="nagra" productTerm="PR1">
+          <Destination accessTerm="CA900004" destinationID="nagra" deviceId="STBmanaged" productTerm="PR1"/>
+        </Destinations>
+      </Terms>
+  </Offer>
+  <Feature id="">
+    <Description category="TV_EPS" library="true" programmeId="1234568" titleId="234567">
+      <Title>Title</Title>
+      <ShortSynopsis>Some description</ShortSynopsis>
+      <LongSynopsis>Some description</LongSynopsis>
+      <NominalDuration></NominalDuration>
+      <Genre main="4" sub="2">Movie:Animation</Genre>
+      <Production>
+        <Year>1990</Year>
+        <Colour>Colour</Colour>
+        <Country>GB</Country>
+      </Production>
+      <SeasonNumber>01</SeasonNumber>
+      <EpisodeNumber>01</EpisodeNumber>
+      <EpisodeTitle>episode title</EpisodeTitle>
+    </Description>
+    <Images>
+      <ImageSource>
+        <Image class="poster" contentType="image/jpeg" fileSize="1294603" filename="I@12345.jpg" imageId="I@12345.jpg"/>
+        <Image class="landscape" contentType="image/jpeg" fileSize="2110563" filename="I@I@12345_L.jpg" imageId="I@12345_L.jpg"/>
+      </ImageSource>
+    </Images>
+  </Feature>
+  <Media>
+    <Videos>
+      <Video class="feature" assetId="ON123458" versionId="1234567" versionCopyId="456789" operation="create">
+        <LicenseWindow start="2016-07-25T01:50:29Z" end="2016-11-02T01:50:29Z"/>
+        <MediaDescription>Title</MediaDescription>
+        <ParentalRating>G</ParentalRating>
+        <ConsumerWarnings>
+          <Warning order="1" severity="1" label="Language" code="l"/>
+          <Warning order="2" severity="1" label="Violence" code="v"/>
+          <Warning order="3" severity="1" label="Supernatural Themes" code="st"/>
+        </ConsumerWarnings>
+        <Duration></Duration>
+        <AspectRatio>16x9</AspectRatio>
+        <ClosedCaptions>false</ClosedCaptions>
+        <Playback>
+          <AccessControl>
+            <Parameter name="contentId">FXTL_ON123458</Parameter>
+          </AccessControl>
+        </Playback>
+        <Files>
+          <File assetId="ON123458_SD_PDL" bitrate="1800000" contentType="video/mp2ts" fileSize="1944090140" filename="ON123458-576p25.ts" height="576" width="720" resolution="SD" sound="Stereo"/>
+          <File assetId="ON123458_HD_PDL" bitrate="4500000" contentType="video/mp2ts" fileSize="3888090140" filename="ON123458-720p50.ts" height="720" width="1280" resolution="HD" sound="Digital"/>
+          <Location assetId="ON123458_SD_ABR" contentType="smooth" nominalSize="1944090140" uri="http://origin.foxtel.com.au/location/ON123458/ON123458_hss.ism/manifest_sd" variant="medium" resolution="SD" sound="Stereo"/>
+          <Location assetId="ON123458_HD_ABR" contentType="smooth" nominalSize="3888090140" uri="http://origin.foxtel.com.au/location/ON123458/ON123458_hss.ism/manifest_hd" variant="high" resolution="HD" sound="Digital"/>
+        </Files>
+      </Video>
+    </Videos>
+  </Media>
+</FeatureExport>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FeatureExport xmlns="http://foxtel.tv/engineering/bcms/schemas/exchange/2/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activate="true" origin="IBMS" packageId="00000006" publishedDate="2016-07-25T01:50:30Z" schemaVersion="2.5.0">
+  <Header>
+    <ExhibitionWindow end="2016-07-25T03:50:30Z" offerType="PPV-New" price="0.00" start="2016-07-25T01:50:30Z"/>
+    <Terms>
+      <Term type="CA900006">
+      <Parameter name="profile"/>
+      <Parameter name="policy"/>
+      <Parameter name="download">true</Parameter>
+      <Parameter name="streaming">false</Parameter>
+      <Parameter name="rentalHours">48</Parameter>
+      <Parameter name="retentionPeriod">P28D</Parameter>
+      <Parameter name="rentalHours">P7D</Parameter>
+    </Term>
+    <Term type="PR1">
+      <Parameter name="product">VOD</Parameter>
+    </Term>
+    </Terms>
+    <Destinations accessTerm="CA900006" destinationID="nagra" productTerm="PR1">
+      <Destination accessTerm="CA900006" destinationID="nagra" deviceId="STBmanaged" productTerm="PR1"/>
+    </Destinations>
+  </Header>
+  <Feature>
+    <Description bugging="false" category="TV_EPS" groupID="" library="true" programmeId="1234569" providerId="DSY" showID="234567" versionCopyId="456789" versionId="1234567">
+      <Title>Title</Title>
+      <ShortSynopsis>Some description</ShortSynopsis>
+      <LongSynopsis>Some description</LongSynopsis>
+      <VideoFormat>SD</VideoFormat>
+      <NominalDuration></NominalDuration>
+      <Genre main="4" sub="2">Movie:Animation</Genre>
+      <ParentalRating>G</ParentalRating>
+      <ConsumerWarnings>l v st</ConsumerWarnings>
+      <Subtitled>false</Subtitled>
+      <Production>
+        <Year>1990</Year>
+        <Colour>Colour</Colour>
+        <Country>GB</Country>
+      </Production>
+      <SeasonNumber>01</SeasonNumber>
+      <EpisodeNumber>01</EpisodeNumber>
+      <EpisodeTitle>episode title</EpisodeTitle>
+    </Description>
+  </Feature>
+  <Media>
+    <Videos>
+      <Video class="feature">
+        <Duration></Duration>
+        <AspectRatio>16x9</AspectRatio>
+        <ClosedCaptions>false</ClosedCaptions>
+        <Sound>Stereo</Sound>
+        <Files base="">
+           <File assetId="ON123460" bitrate="8000" contentType="video/mp2ts" fileSize="1064772592" filename=".ts" height="576" width="720"/>
+        </Files>
+      </Video>
+    </Videos>
+    <Images>
+      <ImageSource base="">
+        <Image class="poster" contentType="image/jpeg" fileSize="138265" filename="I@12345.jpg" imageId="I@I@12345"/>
+        <Image class="landscape" contentType="image/jpeg" fileSize="144832" filename="I@12345_L.jpg" imageId="I@12345_L"/>
+      </ImageSource>
+    </Images>
+  </Media>
+</FeatureExport>

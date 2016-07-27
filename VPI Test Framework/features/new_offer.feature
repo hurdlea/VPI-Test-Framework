@@ -12,7 +12,7 @@ Feature: Test Suite 1: New offers are created using both VOD production systems:
 Scenario: Create an HD PPV offer (TC1a)
     Given I create a PPV-Libray offer 00000001 for programme 1234567
       And The offer is active in 10 minutes for 2 hours
-      And It has new programme media ON123456
+      And It has new programme media ON123456 in HD
       And The programme is valid for 100 days
      Then I export the offer as FPE3.0
       And I write it in new_offer_tests as tc1a
@@ -21,7 +21,7 @@ Scenario: Create an HD PPV offer (TC1a)
 Scenario: Create an split HD subscription offer for programme 1234567 (TC1b)
     Given I create a Subscription offer 00000002 for programme 1234567
       And The offer is active in 10 minutes for 2 hours
-      And It has new programme media ON123457
+      And It has split programme media ON123457 in HD
       And The programme is valid for 100 days
      Then I export the offer as FPE3.0
       And I write it in new_offer_tests as tc1b
@@ -30,16 +30,16 @@ Scenario: Create an split HD subscription offer for programme 1234567 (TC1b)
 Scenario: Create an HD Subscription offer which will be shared (TC1c)
     Given I create a Subscription offer 00000003 for programme 1234568
       And The offer is active now for 2 hours
-      And It has new programme media ON123458
+      And It has new programme media ON123458 in HD
       And The programme is valid for 100 days
      Then I export the offer as FPE3.0
       And I write it in new_offer_tests as tc1c
 
 @new_offer
 Scenario: Create a shared HD PPV-Library offer (TC1d)
-    Given I share a PPV-Library offer 00000004 for programme 1234568
+    Given I create a PPV-Library offer 00000004 for programme 1234568
       And The offer is active now for 2 hours
-      And It has programme media ON123458
+      And It shares programme media ON123458 in HD
       And The programme is valid for 100 days
      Then I export the offer as FPE3.0
       And I write it in new_offer_tests as tc1d

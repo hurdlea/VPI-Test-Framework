@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<FeatureExport xmlns="http://foxtel.tv/engineering/vpi/schemas/exchange/3/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" signature="" origin="IBMS" publishedDate="2016-07-01T06:14:43Z" schemaVersion="3.0.0">
-  <Offer id="00000001" activate="true" operation="create">
-    <ExhibitionWindow start="2016-07-01T06:24:43Z" end="2016-07-01T08:14:43Z" price="0.00" offerType="Subscription"/>
+<FeatureExport xmlns="http://foxtel.tv/engineering/vpi/schemas/exchange/3/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" signature="" origin="IBMS" publishedDate="2016-07-25T01:50:30Z" schemaVersion="3.0.0">
+  <Offer id="00000008" activate="true" operation="create">
+    <ExhibitionWindow start="2016-07-25T01:50:30Z" end="2016-07-25T03:50:30Z" price="0.00" offerType="Subscription"/>
     <ProviderId>DSY</ProviderId>
     <Distributor reportingCode="DSY" name="DSY"/>
     <Deal purchaseId="" groupId=""/>
@@ -16,7 +16,7 @@
     <Subtitled>false</Subtitled>
     <ContentGrouping>
       <ContentGroup name="main title">
-        <VideoRef id="ON123456" class="feature"/>
+        <VideoRef id="ON123462" class="feature"/>
         <ImageRef id="I@12345_L" format="JPG" class="landscape"/>
         <ImageRef id="I@12345" format="JPG" class="poster"/>
       </ContentGroup>
@@ -36,7 +36,7 @@
       </Terms>
   </Offer>
   <Feature id="">
-    <Description category="TV_EPS" library="true" programmeId="1234567" titleId="234567">
+    <Description category="TV_EPS" library="true" programmeId="1234570" titleId="234567">
       <Title>Title</Title>
       <ShortSynopsis>Some description</ShortSynopsis>
       <LongSynopsis>Some description</LongSynopsis>
@@ -60,8 +60,8 @@
   </Feature>
   <Media>
     <Videos>
-      <Video class="feature" assetId="ON123456" versionId="1234567" versionCopyId="456789" operation="create">
-        <LicenseWindow start="2016-07-01T06:24:43Z" end="2016-10-09T06:14:43Z"/>
+      <Video class="feature" assetId="ON123462" versionId="1234567" versionCopyId="456789" operation="create">
+        <LicenseWindow start="2016-07-25T01:50:30Z" end="2016-11-02T01:50:30Z"/>
         <MediaDescription>Title</MediaDescription>
         <ParentalRating>G</ParentalRating>
         <ConsumerWarnings>
@@ -74,12 +74,12 @@
         <ClosedCaptions>false</ClosedCaptions>
         <Playback>
           <AccessControl>
-            <Parameter name="contentId">FXTL_ON123456</Parameter>
+            <Parameter name="contentId">FXTL_ON123462</Parameter>
           </AccessControl>
         </Playback>
         <Files>
-          <File assetId="ON123456_SD_PDL" bitrate="1800000" contentType="video/mp2ts" fileSize="1944090140" filename="ON123456-576p25.ts" height="576" width="720" resolution="SD" sound="Stereo"/>
-          <Location assetId="ON123456_SD_ABR" contentType="smooth" nominalSize="1944090140" uri="http://origin.foxtel.com.au/location/ON123456/ON123456_hss.ism/manifest_sd" variant="medium" resolution="SD" sound="Stereo"/>
+          <File assetId="ON123462_SD_PDL" bitrate="1800000" contentType="video/mp2ts" fileSize="1944090140" filename="ON123462-576p25.ts" height="576" width="720" resolution="SD" sound="Stereo"/>
+          <Location assetId="ON123462_SD_ABR" contentType="smooth" nominalSize="1944090140" uri="http://origin.foxtel.com.au/location/ON123462/ON123462_hss.ism/manifest_sd" variant="medium" resolution="SD" sound="Stereo"/>
         </Files>
       </Video>
     </Videos>
